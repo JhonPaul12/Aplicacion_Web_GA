@@ -16,13 +16,14 @@ jobs:
       run: dotnet restore
 
     - name: Análisis estático con SonarCloud (Windows CLI)
-      shell: pwsh
-      run: |
-        "C:\Users\justi\OneDrive\Escritorio\sonar-scanner-7.1.0.4889-windows-x64\bin\sonar-scanner.bat" `
-          -Dsonar.projectKey=jhonpaul12_Aplicacion_Web_GA `
-          -Dsonar.organization=jhonpaul12 `
-          -Dsonar.host.url=https://sonarcloud.io `
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      shell: cmd
+      run: >
+        "C:\Users\justi\OneDrive\Escritorio\sonar-scanner-7.1.0.4889-windows-x64\bin\sonar-scanner.bat"
+        -Dsonar.projectKey=jhonpaul12_Aplicacion_Web_GA
+        -Dsonar.organization=jhonpaul12
+        -Dsonar.host.url=https://sonarcloud.io
+        -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+
 
     - name: Compilar
       run: dotnet build --configuration Release --no-restore
