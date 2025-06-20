@@ -20,7 +20,7 @@ jobs:
       run: >
         "C:\Users\justi\OneDrive\Escritorio\sonar-scanner-7.1.0.4889-windows-x64\bin\sonar-scanner.bat"
         -Dsonar.projectKey=JhonPaul12_Aplicacion_Web_GA
-        -Dsonar.organization=Jhonpaul12
+        -Dsonar.organization=jhonpaul12
         -Dsonar.host.url=https://sonarcloud.io
         -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
