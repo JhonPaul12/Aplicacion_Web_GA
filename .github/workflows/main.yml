@@ -16,13 +16,15 @@ jobs:
       run: dotnet restore
 
     - name: Análisis estático con SonarCloud
-      uses: SonarSource/sonarcloud-github-action@master
+      uses: SonarSource/sonarqube-scan-action@v2.0.0
       with:
-        organization: JhonPaul12  # remplaza con el ID exacto de tu organización en SonarCloud
-        projectKey: JhonPaul12_Aplicacion_Web_GA  # remplaza con el projectKey exacto que creaste
-        projectName: Aplicacion_Web_GA
+        projectBaseDir: .
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_HOST_URL: https://sonarcloud.io
+        SONAR_PROJECT_KEY: jhonpaul12_Aplicacion_Web_GA
+        SONAR_ORGANIZATION: jhonpaul12
+
 
     - name: Compilar
       run: dotnet build --configuration Release --no-restore
