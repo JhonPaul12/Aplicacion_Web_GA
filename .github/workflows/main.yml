@@ -15,6 +15,15 @@ jobs:
     - name: Restaurar dependencias
       run: dotnet restore
 
+    - name: Análisis estático con SonarCloud
+      uses: SonarSource/sonarcloud-github-action@master
+      with:
+        organization: JhonPaul12  # remplaza con el ID exacto de tu organización en SonarCloud
+        projectKey: JhonPaul12_Aplicacion_Web_GA  # remplaza con el projectKey exacto que creaste
+        projectName: Aplicacion_Web_GA
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
     - name: Compilar
       run: dotnet build --configuration Release --no-restore
 
