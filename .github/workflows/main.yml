@@ -15,16 +15,14 @@ jobs:
     - name: Restaurar dependencias
       run: dotnet restore
 
-    - name: Análisis estático con SonarCloud
-      uses: SonarSource/sonarqube-scan-action@v2.0.0
-      with:
-        projectBaseDir: .
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        SONAR_HOST_URL: https://sonarcloud.io
-        SONAR_PROJECT_KEY: jhonpaul12_Aplicacion_Web_GA
-        SONAR_ORGANIZATION: jhonpaul12
-
+    - name: Análisis estático con SonarCloud (Windows CLI)
+      shell: pwsh
+      run: |
+        "C:\Users\justi\OneDrive\Escritorio\sonar-scanner-7.1.0.4889-windows-x64\bin\sonar-scanner.bat" `
+          -Dsonar.projectKey=jhonpaul12_Aplicacion_Web_GA `
+          -Dsonar.organization=jhonpaul12 `
+          -Dsonar.host.url=https://sonarcloud.io `
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
     - name: Compilar
       run: dotnet build --configuration Release --no-restore
@@ -38,3 +36,4 @@ jobs:
     - name: Desplegar en IIS con PowerShell
       shell: pwsh
       run: ./deploy.ps1 -publishFolder ./publish -iisFolder "C:\\inetpub\\wwwroot\\MiApp"
+
