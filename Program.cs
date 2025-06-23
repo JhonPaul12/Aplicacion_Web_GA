@@ -1,15 +1,25 @@
+﻿using Serilog;
+using Prometheus;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+//Configurar Serilog 
+builder.Host.UseSerilog((context, services, configuration) => {
+    configuration
+        .ReadFrom.Configuration(context.Configuration)
+        .ReadFrom.Services(services)
+        .Enrich.FromLogContext();
+});
+
+//Agregar servicios necesarios antes del build
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+//Configurar middleware 
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -18,8 +28,15 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseHttpMetrics(); //Middleware de Prometheus
+
 app.UseAuthorization();
 
-app.MapRazorPages();
+//Mapear páginas y métricas
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapRazorPages();
+    endpoints.MapMetrics(); // Exponer métricas en /metrics
+});
 
 app.Run();

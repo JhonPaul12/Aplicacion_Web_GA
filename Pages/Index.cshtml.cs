@@ -14,7 +14,7 @@ namespace Aplicacion_Web_GA.Pages
 
         public void OnGet()
         {
-
+            _logger.LogInformation("Se accedió a la página de inicio a las {Hora}", DateTime.Now);
         }
     }
 }
